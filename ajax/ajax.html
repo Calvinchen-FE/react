@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AJAX!</title>
+    <script src="scripts/react.js"></script>
+    <script src="scripts/JSXTransformer.js"></script>
+     <script src="scripts/react-with-addons.js"></script>
+     <script src="scripts/jquery.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/jsx;harmony=true">
+    	var List = React.createClass({
+    		handleEvent: function(){
+    			alert(1);
+    		},
+    		render: function(){
+    			var len = this.props.data.length;
+    			if(len>0){
+	    			var nodes = this.props.data.map(function(k) {
+	    				return (
+	    					<li className="list-item">
+	    						{k.created_at}
+	    					</li>
+	    				);
+	    			});
+	    			return(
+	    				<ul>
+	    					{nodes}
+	    				</ul>
+	    			)
+    			}else{
+    				return(
+    					null
+    				)
+    			}
+    		}
+    	});
+    	var UserGist = React.createClass({
+    	  getInitialState: function() {
+    	  	return {data: []};
+    	  },
+    	  componentDidMount: function() {
+    	    $.get(this.props.source, function(data) {
+    	      if (this.isMounted()) {
+    	        this.setState({data: data});
+    	      }
+    	    }.bind(this));
+    	  },
+    	  render: function() {
+    	    return (
+    	      <div className="list">
+    	       <List data={this.state.data}/>
+    	      </div>
+    	    );
+    	  }
+    	});
+    	React.render(
+    		<UserGist source="https://api.github.com/users/octocat/gists" />,
+    		document.getElementById('example')
+    	);
+    </script>
+  </body>
+</html>
