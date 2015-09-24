@@ -1,0 +1,1 @@
+Components have three main parts of their lifecycle: Mounting(being inserted into the DOM), Updating(being re-rendered) and Unmounting(being removed from the DOM). React provides hooks into these lifecycle part. will methods are called right before something happens, and did methods which are called right after something happens.
